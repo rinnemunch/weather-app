@@ -18,8 +18,13 @@ else:
 
   if response.status_code == 200:
     data = response.json()
-    temp = data["main"]["temp"]
-    description = data["weather"][0]["description"]
-    print(f"{city.title()} Weather: {description}, {temp}°F")
+    temp = round(data["main"]["temp"])
+    description = data["weather"][0]["description"].title()
+
+    print("\n☀️ Weather Report ☀️")
+    print(f"City: {city.title()}")
+    print(f"Condition: {description}")
+    print(f"Temperature: {temp}°F")
+
   else:
     print("City not found or API error.")
