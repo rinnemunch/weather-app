@@ -26,5 +26,11 @@ else:
     print(f"Condition: {description}")
     print(f"Temperature: {temp}°F")
 
+  elif response.status_code == 401:
+    print("Error: Invalid API key. Check your credentials.")
+
+  elif response.status_code == 404:
+    print("Error: City not found. Double-check the spelling.")
+
   else:
-    print("City not found or API error.")
+    print(f"Error: Something went wrong. (Code {response.status_code})")
