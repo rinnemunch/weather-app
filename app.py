@@ -29,6 +29,7 @@ def index():
             weather = {
                 "city": city.title(),
                 "temp": round(data["main"]["temp"]),
+                "feels_like": round(data["main"]["feels_like"]),
                 "description": data["weather"][0]["description"].title(),
                 "icon": data["weather"][0]["icon"]
             }
