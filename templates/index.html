@@ -31,6 +31,8 @@
     <p><strong>Condition:</strong> {{ weather.description }}</p>
     <p><strong>Temperature:</strong> {{ weather.temp }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
     <p><strong>Feels Like:</strong> {{ weather.feels_like }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
+    <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+    <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} {% if selected_units == 'metric' %}m/s{% else %}mph{% endif %}</p>
     {% elif error %}
     <p class="error-message">{{ error }}</p>
     {% endif %}

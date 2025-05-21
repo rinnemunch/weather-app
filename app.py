@@ -31,7 +31,9 @@ def index():
                 "temp": round(data["main"]["temp"]),
                 "feels_like": round(data["main"]["feels_like"]),
                 "description": data["weather"][0]["description"].title(),
-                "icon": data["weather"][0]["icon"]
+                "icon": data["weather"][0]["icon"],
+                "humidity": data["main"]["humidity"],
+                "wind_speed": data["wind"]["speed"]
             }
         elif response.status_code == 401:
             error = "Invalid API key."
