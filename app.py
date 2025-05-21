@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import requests
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ def index():
   city = request.args.get("city")
 
   if not city:
-    return "Please provide a city. Example: /?city=London"
+    return render_template("index.html")
 
   city = city.strip()
 
