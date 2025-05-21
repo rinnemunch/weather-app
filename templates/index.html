@@ -25,6 +25,9 @@
     {% if weather %}
     <h2>☀️ Weather Report ☀️</h2>
     <p><strong>City:</strong> {{ weather.city }}</p>
+    {% if weather.icon %}
+    <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather icon">
+    {% endif %}
     <p><strong>Condition:</strong> {{ weather.description }}</p>
     <p><strong>Temperature:</strong> {{ weather.temp }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
     {% elif error %}
