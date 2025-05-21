@@ -16,6 +16,12 @@ button {
   margin: 5px;
 }
 
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+  text-align: center;
+}
+
 button {
   background-color: #4caf50;
   color: white;
@@ -30,4 +36,21 @@ button:hover {
 .error-message {
   color: red;
   font-weight: bold;
+}
+
+body.dark {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+.dark input,
+.dark select,
+.dark button {
+  background-color: #333;
+  color: #f1f1f1;
+  border: 1px solid #888;
+}
+
+.dark .error-message {
+  color: #ff6b6b;
 }
