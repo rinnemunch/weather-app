@@ -14,13 +14,19 @@
     <form method="get" action="/">
       <label for="city">Enter a city:</label>
       <input type="text" name="city" id="city" required />
+
+      <label for="units">Units:</label>
+      <select name="units" id="units">
+        <option value="imperial" {% if selected_units == "imperial" %}selected{% endif %}>Fahrenheit (&deg;F)</option>
+        <option value="metric" {% if selected_units == "metric" %}selected{% endif %}>Celsius (&deg;C)</option>
+  </select>
       <button type="submit">Get Weather</button>
     </form>
     {% if weather %}
     <h2>☀️ Weather Report ☀️</h2>
     <p><strong>City:</strong> {{ weather.city }}</p>
     <p><strong>Condition:</strong> {{ weather.description }}</p>
-    <p><strong>Temperature:</strong> {{ weather.temp }}°F</p>
+    <p><strong>Temperature:</strong> {{ weather.temp }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
     {% elif error %}
     <p class="error-message">{{ error }}</p>
     {% endif %}
