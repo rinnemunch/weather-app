@@ -5,13 +5,15 @@ import requests
 import time
 import json
 from flask import jsonify
+import os
+from dotenv import load_dotenv
 
-
+load_dotenv()
 app = Flask(__name__)
 app.secret_key = "dev"
 app.permanent_session_lifetime = timedelta(days=1)
 
-api_key = "fce67aa670f3c98312d40a306b112b8e"
+api_key = os.getenv("API_KEY")
 base_url = "https://api.openweathermap.org/data/2.5/weather"
 
 @app.route("/detect-location")
