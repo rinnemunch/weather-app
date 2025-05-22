@@ -1,6 +1,11 @@
 from flask import Flask, request, render_template, session
 from datetime import timedelta
 import requests
+#temp time test
+import time
+import json
+from flask import jsonify
+
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -8,6 +13,19 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 api_key = "fce67aa670f3c98312d40a306b112b8e"
 base_url = "https://api.openweathermap.org/data/2.5/weather"
+
+@app.route("/detect-location")
+def detect_location():
+    try:
+        ip_response = requests.get("https://ipinfo.io/json")
+        if ip_response.status_code == 200:
+            data = ip_response.json()
+            return jsonify({"city": data.get("city", "")})
+        else:
+            return jsonify({"city": ""})
+    except:
+        return jsonify({"city": ""})
+
 
 @app.route("/", methods=["GET"])
 def index():
@@ -35,6 +53,8 @@ def index():
             "appid": api_key,
             "units": units
         }
+
+        time.sleep(2)
 
         response = requests.get(base_url, params=params)
 

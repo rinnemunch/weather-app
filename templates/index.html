@@ -22,6 +22,7 @@
 {% endif %}
 
     <form method="get" action="/">
+      <button type="button" id="detect-location">Use My Location</button>
       <label for="city">Enter a city:</label>
       <input type="text" name="city" id="city" required autofocus />
 
@@ -71,7 +72,24 @@
   form.addEventListener("submit", () => {
     spinner.classList.remove("hidden");
   });
+
+  // location detection
+  const detectBtn = document.getElementById("detect-location");
+  const cityInput = document.getElementById("city");
+
+  detectBtn.addEventListener("click", () => {
+    fetch("/detect-location")
+      .then(res => res.json())
+      .then(data => {
+        if (data.city) {
+          cityInput.value = data.city;
+        } else {
+          alert("Could not detect your location.");
+        }
+      });
+  });
 </script>
+
 
 
   </body>
