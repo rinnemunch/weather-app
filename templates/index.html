@@ -4,109 +4,124 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Your CSS -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <h1>Simple Weather App</h1>
-    <button id="toggle-theme">Toggle Dark Mode</button>
-    {% if history %}
-      <h3>Recent Searches</h3>
+    <div class="container py-5">
+      <h1 class="mb-3">Simple Weather App</h1>
+      <button id="toggle-theme" class="btn btn-dark mb-4">Toggle Dark Mode</button>
+
+      {% if history %}
+      <div class="mb-3">
+        <h3>Recent Searches</h3>
         <form method="post" action="/clear-history" id="clear-history-form">
-          <button type="submit">Clear Search History</button>
+          <button type="submit" class="btn btn-sm btn-outline-danger mb-2">Clear Search History</button>
+        </form>
+        <ul class="list-group">
+          {% for city in history %}
+            <li class="list-group-item">{{ city }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Weather Form -->
+      <form method="get" action="/" class="row g-3 align-items-center mb-4">
+        <div class="col-auto">
+          <button type="button" class="btn btn-outline-primary" id="detect-location">Use My Location</button>
+        </div>
+        <div class="col-auto">
+          <input type="text" class="form-control" name="city" id="city" required autofocus placeholder="Enter a city">
+        </div>
+        <div class="col-auto">
+          <label for="units" class="form-label">Select Units:</label>
+          <select name="units" id="units" class="form-select">
+            <option value="imperial" {% if selected_units == "imperial" %}selected{% endif %}>Fahrenheit (&deg;F)</option>
+            <option value="metric" {% if selected_units == "metric" %}selected{% endif %}>Celsius (&deg;C)</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-success">Get Weather</button>
+        </div>
       </form>
 
-      <ul>
-        {% for city in history %}
-          <li>{{ city }}</li>
-        {% endfor %}
-      </ul>
-{% endif %}
+      <!-- Spinner -->
+      <div id="spinner" class="hidden text-center">
+        <p class="fw-bold text-primary">Loading...</p>
+      </div>
 
-    <form method="get" action="/">
-      <button type="button" id="detect-location">Use My Location</button>
-      <label for="city">Enter a city:</label>
-      <input type="text" name="city" id="city" required autofocus />
+      <!-- Weather Result -->
+      {% if weather %}
+      <div class="card text-center mb-4">
+        <div class="card-body">
+          <h2 class="card-title">☀️ Weather Report ☀️</h2>
+          <p><strong>City:</strong> {{ weather.city }}</p>
+          {% if weather.icon %}
+            <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather icon">
+          {% endif %}
+          <p><strong>Condition:</strong> {{ weather.description }}</p>
+          <p><strong>Temperature:</strong> {{ weather.temp }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
+          <p><strong>Feels Like:</strong> {{ weather.feels_like }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
+          <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+          <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} {% if selected_units == 'metric' %}m/s{% else %}mph{% endif %}</p>
+        </div>
+      </div>
+      {% elif error %}
+        <p class="error-message">{{ error }}</p>
+      {% endif %}
 
-      <label for="units">Units:</label>
-      <select name="units" id="units">
-        <option value="imperial" {% if selected_units == "imperial" %}selected{% endif %}>Fahrenheit (&deg;F)</option>
-        <option value="metric" {% if selected_units == "metric" %}selected{% endif %}>Celsius (&deg;C)</option>
-  </select>
-      <button type="submit">Get Weather</button>
-    </form>
-    <div id="spinner" class="hidden">
-      <p>Loading...</p>
-    </div>
-    {% if weather %}
-    <h2>☀️ Weather Report ☀️</h2>
-    <p><strong>City:</strong> {{ weather.city }}</p>
-    {% if weather.icon %}
-    <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather icon">
-    {% endif %}
-    <p><strong>Condition:</strong> {{ weather.description }}</p>
-    <p><strong>Temperature:</strong> {{ weather.temp }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
-    <p><strong>Feels Like:</strong> {{ weather.feels_like }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
-    <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
-    <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} {% if selected_units == 'metric' %}m/s{% else %}mph{% endif %}</p>
-    {% elif error %}
-    <p class="error-message">{{ error }}</p>
-    {% endif %}
+      <!-- JavaScript -->
+      <script>
+        const toggleButton = document.getElementById("toggle-theme");
+        toggleButton.addEventListener("click", () => {
+          document.body.classList.toggle("dark");
+          localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+        });
 
-
-    <!-- javascript -->
-<script>
-  const toggleButton = document.getElementById("toggle-theme");
-  toggleButton.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
-  });
-
-  // Load user's saved preference
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-  }
-
-  // Spinner
-  const form = document.querySelector("form");
-  const spinner = document.getElementById("spinner");
-
-  form.addEventListener("submit", () => {
-    spinner.classList.remove("hidden");
-  });
-
-  // location detection
-  const detectBtn = document.getElementById("detect-location");
-  const cityInput = document.getElementById("city");
-
-  detectBtn.addEventListener("click", () => {
-    fetch("/detect-location")
-      .then(res => res.json())
-      .then(data => {
-        if (data.city) {
-          cityInput.value = data.city;
-        } else {
-          alert("Could not detect your location.");
+        if (localStorage.getItem("darkMode") === "true") {
+          document.body.classList.add("dark");
         }
-      });
-  });
 
-  //clear search history logic
+        const form = document.querySelector("form");
+        const spinner = document.getElementById("spinner");
 
-  const clearForm = document.getElementById("clear-history-form");
+        form.addEventListener("submit", () => {
+          spinner.classList.remove("hidden");
+        });
 
-  clearForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    fetch("/clear-history", { method: "POST" }).then(() => {
-      window.location.href = "/";
-    });
-  });
+        const detectBtn = document.getElementById("detect-location");
+        const cityInput = document.getElementById("city");
 
-</script>
+        detectBtn.addEventListener("click", () => {
+          fetch("/detect-location")
+            .then(res => res.json())
+            .then(data => {
+              if (data.city) {
+                cityInput.value = data.city;
+              } else {
+                alert("Could not detect your location.");
+              }
+            });
+        });
 
-
-
+        const clearForm = document.getElementById("clear-history-form");
+        clearForm?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          fetch("/clear-history", { method: "POST" }).then(() => {
+            window.location.href = "/";
+          });
+        });
+      </script>
+    </div>
   </body>
 </html>
