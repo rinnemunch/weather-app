@@ -54,3 +54,13 @@ body.dark {
 .dark .error-message {
   color: #ff6b6b;
 }
+
+.hidden {
+  display: none;
+}
+
+#spinner {
+  text-align: center;
+  font-weight: bold;
+  margin: 20px;
+}
