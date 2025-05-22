@@ -1,4 +1,4 @@
-# 🌤️ SkyCast (Weather App)
+# 🌤️ ClimaTest (Weather App)
 
 A polished weather app built with Flask, Bootstrap, and the OpenWeatherMap API.
 
@@ -16,8 +16,8 @@ A polished weather app built with Flask, Bootstrap, and the OpenWeatherMap API.
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/skycast.git
-cd skycast
+git clone https://github.com/rinnemunch/weather-app.git
+cd weather-app
 ```
 
 2. Set Up Virtual Environment
