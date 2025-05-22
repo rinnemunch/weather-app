@@ -14,6 +14,10 @@
     <button id="toggle-theme">Toggle Dark Mode</button>
     {% if history %}
       <h3>Recent Searches</h3>
+        <form method="post" action="/clear-history" id="clear-history-form">
+          <button type="submit">Clear Search History</button>
+      </form>
+
       <ul>
         {% for city in history %}
           <li>{{ city }}</li>
@@ -88,6 +92,18 @@
         }
       });
   });
+
+  //clear search history logic
+
+  const clearForm = document.getElementById("clear-history-form");
+
+  clearForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    fetch("/clear-history", { method: "POST" }).then(() => {
+      window.location.href = "/";
+    });
+  });
+
 </script>
 
 

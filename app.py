@@ -26,6 +26,10 @@ def detect_location():
     except:
         return jsonify({"city": ""})
 
+@app.route("/clear-history", methods=["POST"])
+def clear_history():
+    session.pop("history", None)
+    return "", 204  # No content clear it all up!
 
 @app.route("/", methods=["GET"])
 def index():
