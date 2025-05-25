@@ -11,14 +11,22 @@
   </head>
   <body>
     <!-- Header Banner -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#">🌤️ Weather Python</a>
-        <span class="navbar-text text-light">
-          Powered by ClimaTest
-        </span>
+    <header class="navbar-dark">
+      <div class="top-nav d-flex justify-content-between align-items-center px-4 py-2">
+        <div class="logo text-white fw-bold">🌤️ Weather Python</div>
+
+        <form action="/" method="get" class="search-bar d-flex">
+          <input type="text" name="city" class="form-control me-2" placeholder="Search City or Zip Code" required />
+          <button type="submit" class="btn btn-outline-light">🔍</button>
+        </form>
+
+        <div class="nav-actions text-white d-flex align-items-center gap-3">
+          <div>°F</div>
+          <button class="btn btn-sm btn-outline-light">Sign Up</button>
+        </div>
       </div>
-    </nav>
+    </header>
+
 
     <div class="container py-5">
 
