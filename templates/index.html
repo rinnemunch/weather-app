@@ -4,19 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
-
     <!-- Bootstrap link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
     <!-- Header Banner -->
     <header class="navbar-dark">
-      <div class="top-nav d-flex justify-content-between align-items-center px-4 py-2">
+      <div
+        class="top-nav d-flex justify-content-between align-items-center px-4 py-2"
+      >
         <div class="logo text-white fw-bold">🌤️ Weather Python</div>
 
         <form action="/" method="get" class="search-bar d-flex">
-          <input type="text" name="city" class="form-control me-2" placeholder="Search City or Zip Code" required />
+          <input
+            type="text"
+            name="city"
+            class="form-control me-2"
+            placeholder="Search City or Zip Code"
+            required
+          />
           <button type="submit" class="btn btn-outline-light">🔍</button>
         </form>
 
@@ -27,26 +40,45 @@
       </div>
     </header>
 
-
-
     <div class="container py-5">
+      <div class="card mb-4 shadow-sm left-card">
+        <div class="card-body">
+          <h1 class="card-title mb-3 text-center">🌦️ ClimaTest</h1>
+          <div class="text-center mb-3">
+            <button id="toggle-theme" class="btn btn-dark">
+              Toggle Dark Mode
+            </button>
+          </div>
 
-<div class="card mb-4 shadow-sm left-card">
-  <div class="card-body">
-    <h1 class="card-title mb-3 text-center">🌦️ ClimaTest</h1>
-    <div class="text-center mb-3">
-      <button id="toggle-theme" class="btn btn-dark">Toggle Dark Mode</button>
-    </div>
-
-    <form method="get" action="/" class="row g-3 align-items-center justify-content-center">
-                  <div class="col-auto">
-              <button type="button" class="btn btn-outline-primary" id="detect-location">Use My Location</button>
+          <form
+            method="get"
+            action="/"
+            class="row g-3 align-items-center justify-content-center"
+          >
+            <div class="col-auto">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="detect-location"
+              >
+                Use My Location
+              </button>
             </div>
             <div class="col-auto">
-              <input type="text" class="form-control" name="city" id="city" required autofocus placeholder="Enter a city">
+              <input
+                type="text"
+                class="form-control"
+                name="city"
+                id="city"
+                required
+                autofocus
+                placeholder="Enter a city"
+              />
             </div>
             <div class="col-auto">
-              <label for="units" class="form-label visually-hidden">Select Units:</label>
+              <label for="units" class="form-label visually-hidden"
+                >Select Units:</label
+              >
               <select name="units" id="units" class="form-select">
                 <option value="imperial" {% if selected_units == "imperial" %}selected{% endif %}>Fahrenheit (&deg;F)</option>
                 <option value="metric" {% if selected_units == "metric" %}selected{% endif %}>Celsius (&deg;C)</option>
@@ -55,17 +87,9 @@
             <div class="col-auto">
               <button type="submit" class="btn btn-success">Get Weather</button>
             </div>
-    </form>
-  </div>
-</div>
-
-
-
-          <!-- <form method="get" action="/" class="row g-3 align-items-center justify-content-center">
-
           </form>
         </div>
-      </div> -->
+      </div>
 
       <!-- Spinner -->
       <div id="spinner" class="hidden text-center mb-3">
@@ -79,34 +103,52 @@
           <h2 class="card-title">☀️ Weather Report ☀️</h2>
           <p><strong>City:</strong> {{ weather.city }}</p>
           {% if weather.icon %}
-            <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather icon">
+          <img
+            src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png"
+            alt="Weather icon"
+          />
           {% endif %}
           <p><strong>Condition:</strong> {{ weather.description }}</p>
-          <p><strong>Temperature:</strong> {{ weather.temp }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
-          <p><strong>Feels Like:</strong> {{ weather.feels_like }}&deg;{% if selected_units == 'metric' %}C{% else %}F{% endif %}</p>
+          <p>
+            <strong>Temperature:</strong> {{ weather.temp }}&deg;{% if
+            selected_units == 'metric' %}C{% else %}F{% endif %}
+          </p>
+          <p>
+            <strong>Feels Like:</strong> {{ weather.feels_like }}&deg;{% if
+            selected_units == 'metric' %}C{% else %}F{% endif %}
+          </p>
           <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
-          <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} {% if selected_units == 'metric' %}m/s{% else %}mph{% endif %}</p>
+          <p>
+            <strong>Wind Speed:</strong> {{ weather.wind_speed }} {% if
+            selected_units == 'metric' %}m/s{% else %}mph{% endif %}
+          </p>
         </div>
       </div>
       {% elif error %}
-        <p class="error-message text-danger">{{ error }}</p>
+      <p class="error-message text-danger">{{ error }}</p>
       {% endif %}
 
       <!-- Search History -->
       {% if history %}
       <div class="mb-4">
         <h4>Recent Searches</h4>
-        <form method="post" action="/clear-history" id="clear-history-form" class="mb-2">
-          <button type="submit" class="btn btn-sm btn-outline-danger">Clear Search History</button>
+        <form
+          method="post"
+          action="/clear-history"
+          id="clear-history-form"
+          class="mb-2"
+        >
+          <button type="submit" class="btn btn-sm btn-outline-danger">
+            Clear Search History
+          </button>
         </form>
         <ul class="list-group">
           {% for city in history %}
-            <li class="list-group-item">{{ city }}</li>
+          <li class="list-group-item">{{ city }}</li>
           {% endfor %}
         </ul>
       </div>
       {% endif %}
-
     </div>
 
     <!-- Scripts -->
@@ -114,7 +156,10 @@
       const toggleButton = document.getElementById("toggle-theme");
       toggleButton.addEventListener("click", () => {
         document.body.classList.toggle("dark");
-        localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark")
+        );
       });
 
       if (localStorage.getItem("darkMode") === "true") {
@@ -132,8 +177,8 @@
 
       detectBtn.addEventListener("click", () => {
         fetch("/detect-location")
-          .then(res => res.json())
-          .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             if (data.city) {
               cityInput.value = data.city;
             } else {
