@@ -4,7 +4,7 @@ body {
   text-align: center;
   padding: 50px;
   margin: 0;
-  background-color: #f5f6fa;
+  background-color: #f5f5f5;
 }
 
 form {
@@ -88,4 +88,15 @@ body.dark {
 
 .gap-3 {
   gap: 1rem;
+}
+
+header.navbar-dark {
+  margin: 0;
+  padding: 0;
+}
+
+.left-card {
+  max-width: 700px;
+  margin-left: 2rem;
+  margin-right: auto;
 }
