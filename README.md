@@ -1,59 +1,77 @@
 # 🌤️ ClimaTest (Weather App)
 
-A polished weather app built with Flask, Bootstrap, and the OpenWeatherMap API.
-
-- ✅ Real-time weather data by city
-- 🌎 Location detection by IP
-- 🌓 Dark mode toggle
-- 🌀 Loading spinner
-- 💾 Recent search memory (session)
-- 🔒 API key securely hidden using `.env`
+A polished weather app built with **Flask**, **Bootstrap**, and the **OpenWeatherMap API**.
+Designed to showcase real-world backend skills in a clean, user-friendly UI.
 
 ---
 
-## 🚀 How to Run Locally
+## ✅ Features
 
-### 1. Clone the Repo
+- 🌦️ Real-time weather data by city
+- 🌎 Auto-detect location via IP
+- 📋 Search history stored in SQLite
+- 🌓 Dark mode toggle
+- 🌀 Loading spinner
+- 📂 `.env` file for secret API key
+- ⚙️ Polished Bootstrap 5 layout
+
+---
+
+## 🚀 Run Locally
 
 ```bash
 git clone https://github.com/rinnemunch/weather-app.git
 cd weather-app
 ```
 
-2. Set Up Virtual Environment
-   python -m venv venv
-   source venv/bin/activate # or venv\Scripts\activate on Windows
+1. Set up a virtual environment
 
-3. Install Dependencies
-   pip install -r requirements.txt
+```bash
+python -m venv venv
+# Activate it:
+# On Windows
+venv\Scripts\activate
+# On Mac/Linux
+source venv/bin/activate
+```
 
-4. Create .env File
-   Create a .env file in the project root and add your OpenWeather API key:
-   API_KEY=your_api_key_here
-   You can get a free key at openweathermap.org.
+2. Install dependencies
 
-5. Run the App
-   python app.py
-   Then visit: http://localhost:5000
+```bash
+pip install -r requirements.txt
+```
 
-📦 Stack
+3. Create .env file
 
-- Python / Flask
+```bash
+# .env
+API_KEY=your_api_key_here
+```
 
-- HTML / Bootstrap 5
+Get a free API key from openweathermap.org
 
-- JavaScript
+4. Run the app
 
-- OpenWeatherMap API
+```bash
+python app.py
+```
 
-- dotenv for secret management
+Visit: http://localhost:5000
+
+## 💻 Stack
+
+- Python + Flask
+- SQLite (for city search history)
+- HTML + Bootstrap
+- JavaScript (client-side logic)
+- CSS
+- dotenv (for managing secrets)
 
 ## 📸 Screenshot
 
 ![Screenshot](screenshot.png)
 
-🛡️ Notes
-This is a learning/demo project and not meant for production use.
-The API key is securely handled with environment variables.
+## 🛡️ Notes
 
-Created by Shaun Fulton
+This project was built as a **learning showcase** for Flask and API integration.
+It prioritizes clarity, design, and functionality — not production hardening.

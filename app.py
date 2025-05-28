@@ -40,14 +40,12 @@ def index():
     weather = None
     error = None
 
-    # SQL history
     history = get_recent_cities()
 
     if city:
         city = city.strip()
         city_title = city.title()
 
-        # Updating search history
         if city_title not in history:
             add_city(city_title)
 
@@ -77,14 +75,15 @@ def index():
         else:
             error = f"Error: {response.status_code}"
 
-        return render_template(
-            "index.html",
-            weather=weather,
-            error=error,
-            selected_units=units,
-            history=history,
-            api_key=api_key
-        )
+    return render_template(
+        "index.html",
+        weather=weather,
+        error=error,
+        selected_units=units,
+        history=history,
+        api_key=api_key
+    )
+
 
 
 
