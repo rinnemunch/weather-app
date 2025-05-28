@@ -69,7 +69,7 @@ Visit: http://localhost:5000
 
 ## 📸 Screenshot
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot-new.png)
 
 ## 🛡️ Notes
 
