@@ -94,10 +94,6 @@ header.navbar-dark {
   background-color: #0b1a30;
   color: white;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
   padding: 0.5rem 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -107,8 +103,6 @@ header.navbar-dark {
   margin-left: 2rem;
   margin-right: auto;
 }
-
-/* TODO: Confirm display behavior of #auto-weather when JS loads it */
 
 #auto-weather {
   font-size: 1.1rem;
