@@ -77,8 +77,15 @@ def index():
         else:
             error = f"Error: {response.status_code}"
 
-    return render_template("index.html", weather=weather, error=error, selected_units=units,
-                           history=history)
+        return render_template(
+            "index.html",
+            weather=weather,
+            error=error,
+            selected_units=units,
+            history=history,
+            api_key=api_key
+        )
+
 
 
 init_db()
