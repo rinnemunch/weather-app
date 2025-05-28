@@ -1,15 +1,14 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, jsonify
 from datetime import timedelta
 import requests
 from db import init_db, add_city, get_recent_cities, clear_history as clear_db_history
-from flask import jsonify
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = "dev"
-app.permanent_session_lifetime = timedelta(days=1)
+
 
 api_key = os.getenv("API_KEY")
 base_url = "https://api.openweathermap.org/data/2.5/weather"
@@ -30,7 +29,7 @@ def detect_location():
 
 @app.route("/clear-history", methods=["POST"])
 def clear_history():
-    session.pop("history", None)
+    clear_db_history()
     return "", 204  # No content clear it all up!
 
 
@@ -41,9 +40,8 @@ def index():
     weather = None
     error = None
 
-    # session
-    session.permanent = True
-    history = session.get("history", [])
+    # SQL history
+    history = get_recent_cities()
 
     if city:
         city = city.strip()
@@ -51,9 +49,7 @@ def index():
 
         # Updating search history
         if city_title not in history:
-            history.insert(0, city_title)
-            history = history[:5]
-            session["history"] = history
+            add_city(city_title)
 
         params = {
             "q": city,
@@ -82,7 +78,7 @@ def index():
             error = f"Error: {response.status_code}"
 
     return render_template("index.html", weather=weather, error=error, selected_units=units,
-                           history=session.get("history", []))
+                           history=history)
 
 
 init_db()
