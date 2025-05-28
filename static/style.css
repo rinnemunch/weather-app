@@ -107,3 +107,21 @@ header.navbar-dark {
   margin-left: 2rem;
   margin-right: auto;
 }
+
+/* TODO: Confirm display behavior of #auto-weather when JS loads it */
+
+#auto-weather {
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #1f2937;
+  color: white;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+  display: none;
+}
+
+#auto-weather img {
+  vertical-align: middle;
+  margin-right: 8px;
+  height: 32px;
+}

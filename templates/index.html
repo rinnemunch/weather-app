@@ -40,6 +40,8 @@
       </div>
     </header>
 
+    <div id="auto-weather" class="text-center"></div>
+
     <!-- Climatest Card -->
     <div class="container py-5">
       <div class="card mb-4 shadow-sm left-card">
@@ -154,6 +156,7 @@
     </div>
 
     <!-- Scripts -->
+     // TODO: Finalize auto-weather strip styling + fix visibility issue
     <script>
       const toggleButton = document.getElementById("toggle-theme");
       toggleButton.addEventListener("click", () => {
@@ -196,6 +199,29 @@
           window.location.href = "/";
         });
       });
+
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("/detect-location")
+        .then((res) => res.json())
+        .then((data) => {
+          const city = data.city;
+          if (!city) return;
+
+          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid={{ api_key }}&units=imperial`)
+            .then(res => res.json())
+            .then(data => {
+              const temp = Math.round(data.main.temp);
+              const icon = data.weather[0].icon;
+              const desc = data.weather[0].description;
+              const el = document.getElementById("auto-weather");
+              el.innerHTML = `<img src="https://openweathermap.org/img/wn/${icon}.png" alt=""> ${temp}° • ${city}`;
+              el.style.display = "block";
+          });
+      });
+  });
+
+
     </script>
   </body>
 </html>
